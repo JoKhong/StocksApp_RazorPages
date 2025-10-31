@@ -7,8 +7,6 @@ namespace FinnhubServices
 {
     public class FinnhubService : IFinnhubService
     {
-        //curl "https://finnhub.io/api/v1/quote?symbol=AAPL&token=d4261vpr01qreojot6ggd4261vpr01qreojot6h0"
-
         private readonly IConfiguration _configuration;
         private readonly IHttpClientFactory _httpClientFactory;
 
