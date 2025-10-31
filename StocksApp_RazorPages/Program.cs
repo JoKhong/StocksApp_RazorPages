@@ -1,8 +1,11 @@
+using FinnhubServices;
+using FinnhubContracts;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
 
-//Optional for Dependency Injection
-//builder.Services.AddTransient<IWeatherService, WeatherService>();
+builder.Services.AddTransient<IFinnhubService, FinnhubService>();
 
 var app = builder.Build();
 
