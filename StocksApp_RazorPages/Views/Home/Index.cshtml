@@ -1,39 +1,17 @@
 ﻿@model SharedModels.Stock;
 
-<div class="box trading-panel">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Stock App</title>
+        <meta charset="utf-8" />
+        <link href="~/StyleSheet.css" rel="stylesheet" />
+    </head>
 
-    <div class="flex trading-panel-flex">
+    <body>
+        <h1>Stock Quote</h1>
 
-        <div id="stock-price-panel">
+     @await Component.InvokeAsync("StockPriceCard", Model)
 
-            <div class="stock">
-                <h1 class="stock-title">@Model.StockSymbol</h1>
-
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Current:</td>
-                            <th><small>$</small> <span class="price">@Model.CurrentPrice.ToString("N")</span></th>
-                        </tr>
-
-                        <tr>
-                            <td>High:</td>
-                            <th><small>$</small> <span class="price">@Model.HighestPrice.ToString("N")</span></th>
-                        </tr>
-
-                        <tr>
-                            <td>Low:</td>
-                            <th><small>$</small> <span class="price">@Model.LowestPrie.ToString("N")</span></th>
-                        </tr>
-
-                        <tr>
-                            <td>Open:</td>
-                            <th><small>$</small> <span class="price">@Model.OpenPrice.ToString("N")</span></th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-</div>
+    </body>
+</html>
