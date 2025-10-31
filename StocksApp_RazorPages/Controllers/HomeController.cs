@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FinnhubContracts;
+using SharedModels;
 
 namespace StocksApp_RazorPages.Controllers
 {
@@ -15,9 +16,20 @@ namespace StocksApp_RazorPages.Controllers
         [Route("/")]
         public async Task<IActionResult> Index()
         {
-            Dictionary<string, object>? responseDictionary = await _finnhubService.GetStockPriceQuote("MSFT");
+            string stockName = "MSFT";
 
-            return View(responseDictionary);
+            Dictionary<string, object>? responseDictionary = await _finnhubService.GetStockPriceQuote(stockName);
+
+            Stock stock = new Stock()
+            {
+                StockSymbol = stockName,
+                CurrentPrice = Convert.ToDouble(responseDictionary["c"].ToString()),
+                HighestPrice = Convert.ToDouble(responseDictionary["h"].ToString()),
+                LowestPrie = Convert.ToDouble(responseDictionary["l"].ToString()),
+                OpenPrice = Convert.ToDouble(responseDictionary["o"].ToString())
+            };
+
+            return View(stock);
         }
     }
 }
