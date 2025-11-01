@@ -23,8 +23,8 @@ namespace FinnhubServices
                 using (HttpClient httpClient = _httpClientFactory.CreateClient())
                 {
                     HttpRequestMessage httpRequestMessage = new HttpRequestMessage()
-                    {
-                        RequestUri = new Uri($"https://finnhub.io/api/v1/quote?symbol={stockSymbol}&token={_configuration["FinnhubToken"]}"),
+                    {   
+                        RequestUri = new Uri($"{FinnhubConstants.URL}{FinnhubConstants.QUOTE}?symbol={stockSymbol}&token={_configuration["FinnhubToken"]}"),
                         Method = HttpMethod.Get
                     };
 
@@ -51,5 +51,44 @@ namespace FinnhubServices
                 return null;
             }
         }
+
+
+        public async Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
+        {
+            try
+            {
+                using (HttpClient httpClient = _httpClientFactory.CreateClient())
+                {
+                    HttpRequestMessage httpRequestMessage = new HttpRequestMessage()
+                    {
+                        RequestUri = new Uri($"{FinnhubConstants.URL}{FinnhubConstants.PROFILE}?symbol={stockSymbol}&token={_configuration["FinnhubToken"]}"),
+                        Method = HttpMethod.Get
+                    };
+
+                    HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+
+                    Stream stream = httpResponseMessage.Content.ReadAsStream();
+
+                    StreamReader streamReader = new StreamReader(stream);
+
+                    string response = streamReader.ReadToEnd();
+                    Dictionary<string, object>? responseDictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
+
+                    if (responseDictionary == null)
+                        throw new InvalidOperationException("No response from finnhub server");
+
+                    if (responseDictionary.ContainsKey("error"))
+                        throw new InvalidOperationException(Convert.ToString(responseDictionary["error"]));
+
+                    return responseDictionary;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
     }
 }

@@ -37,5 +37,6 @@ namespace StocksApp_RazorPages.Controllers
 
             return View(stock);
         }
+
     }
 }
