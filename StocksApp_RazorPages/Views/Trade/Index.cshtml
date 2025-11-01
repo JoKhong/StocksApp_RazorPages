@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model SharedModels.StockTrade;
+
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -8,5 +10,8 @@
 </head>
 <body>
     <h1>Company Profile</h1>
+
+    @await Component.InvokeAsync("TradeCard", Model)
+
 </body>
 </html>

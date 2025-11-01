@@ -27,12 +27,12 @@ namespace StocksApp_RazorPages.Controllers
             Dictionary<string, object>? stockQuote = await _finnhubService.GetStockPriceQuote(_tradingOptions.Value.DefaultStockSymbol);
             Dictionary<string, object>? companyProfile = await _finnhubService.GetCompanyProfile(_tradingOptions.Value.DefaultStockSymbol);
 
-            StockTrade stockTrade = new SharedModels.StockTrade
+            StockTrade stockTrade = new StockTrade
             {
                 StockSymbol = Convert.ToString(companyProfile["ticker"].ToString()),
                 StockName = Convert.ToString(companyProfile["name"].ToString()),
                 Price = Convert.ToDouble(stockQuote["c"].ToString()),
-                Quantity = Convert.ToDouble(stockQuote["shareOutstanding"].ToString()),
+                Quantity = Convert.ToDouble(companyProfile["shareOutstanding"].ToString()),
             };
 
             return View(stockTrade);
